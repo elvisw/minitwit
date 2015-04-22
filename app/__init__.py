@@ -16,21 +16,13 @@ from datetime import datetime
 from flask import Flask, request, session, url_for, redirect, \
      render_template, abort, g, flash, _app_ctx_stack
 from werkzeug.security import check_password_hash, generate_password_hash
-import os
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-# configuration
-DATABASE = os.path.join(basedir, 'minitwit.db')
-PER_PAGE = 30
-DEBUG = True
-SECRET_KEY = 'development key'
 
 # create our little application :)
 app = Flask(__name__)
-app.config.from_object(__name__)
+app.config.from_object('config')
 app.config.from_envvar('MINITWIT_SETTINGS', silent=True)
 
+PER_PAGE = app.config.get('PER_PAGE')
 
 def get_db():
     """Opens a new database connection if there is none yet for the
