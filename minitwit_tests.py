@@ -21,7 +21,7 @@ class MiniTwitTestCase(unittest.TestCase):
         """Before each test, set up a blank database"""
         self.db_fd, minitwit.app.config['DATABASE'] = tempfile.mkstemp()
         self.app = minitwit.app.test_client()
-        minitwit.init_db()
+        minitwit.db.init_db()
 
     def tearDown(self):
         """Get rid of the database again after each test."""
