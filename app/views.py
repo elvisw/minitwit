@@ -4,7 +4,7 @@ from flask import request, session, url_for, redirect, \
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import app
-from db import query_db, get_user_id, get_db
+from dbsql import query_db, get_user_id, get_db
 
 PER_PAGE = app.config.get('PER_PAGE')
 

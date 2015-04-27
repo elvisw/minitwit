@@ -9,22 +9,25 @@
     :license: BSD, see LICENSE for more details.
 """
 from flask import Flask, session, g
+from flask.ext.sqlalchemy import SQLAlchemy
+
 
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('MINITWIT_SETTINGS', silent=True)
 
-from app import views, db, filters
+db = SQLAlchemy(app)
+
+from app import views, dbsql, filters, models
 
 @app.before_request
 def before_request():
     g.user = None
     if 'user_id' in session:
-        g.user = db.query_db('select * from user where user_id = ?',
+        g.user = dbsql.query_db('select * from user where user_id = ?',
                           [session['user_id']], one=True)
 
 
 if __name__ == '__main__':
-    db.init_db()
     app.run()
